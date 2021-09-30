@@ -891,7 +891,7 @@ let myCart = cartItemsFromLocalStorage();
 
 function addMovieToCart(id) {
     myCart.push(id);
-    console.log(myCart);
+    // console.log(myCart);
 }
 if (filmsEl) {
     filmsEl.addEventListener('click', function (event) {
@@ -923,7 +923,7 @@ function cartItemsFromLocalStorage() {
     let result = JSON.parse(localStorage.getItem('myCard'));
     return result ? result : [];
 }
-console.log(cartItemsFromLocalStorage())
+// console.log(cartItemsFromLocalStorage())
 
 function createCartItemDiv(el) {
     let divEl = document.createElement('div')
@@ -961,15 +961,15 @@ if (cartEl) {
          {   let elId = event.target.getAttribute('data-id');
             let myCardArr = cartItemsFromLocalStorage();
             myCardArr.splice(myCardArr.indexOf(+elId), 1)
-            console.log(myCardArr);
+            // console.log(myCardArr);
             localStorage.setItem('myCard', JSON.stringify(myCardArr));
             let parentDiv =  event.target.closest('.movie');
-            console.log(parentDiv);
+            // console.log(parentDiv);
             cartEl.removeChild(parentDiv);
             showCartCount();  
         }
     })
 }
-function removeFromCart(divEl){
-    console.log(divEL)
-}
+// function removeFromCart(divEl){
+//     console.log(divEL)
+// }
