@@ -816,14 +816,15 @@ let movies = [{
     }
 ];
 
-const filmsEl = document.getElementById('films');
+// 1-ish elementlarni tanlash
 
+const filmsEl = document.getElementById('films');
+// 2-ish 1ta movie div yaratish
 function createMovieDiv(filmObject) {
     let divEl = document.createElement('div');
     divEl.className = 'movie';
     divEl.innerHTML = `
-
-    <img src="img/${filmObject.poster}" alt="${filmObject.title}" class="movie__poste">;
+    <img src="img/${filmObject.poster}" alt="${filmObject.title}" class="movie__poste">
     <div class="movie__info">
     <h2 class="movie__title">${filmObject.title}</h2>
     <h3 class="movie__genre">${filmObject.genres} </h3>
@@ -833,6 +834,7 @@ function createMovieDiv(filmObject) {
     return divEl;
 };
 
+// 3-ish append qilish
 function appenMovie() {
     movies.forEach((el) => {
         let movieDiv = createMovieDiv(el);
@@ -840,7 +842,7 @@ function appenMovie() {
     })
 }
 if (filmsEl) appenMovie();
-
+// 4-ish cat bo`yicha filter qilish
 function filterFilmsByCat(cat) {
     let result = movies.filter((el) => {
         return el.genres.includes(cat);
@@ -855,48 +857,48 @@ if (buttonsEl) {
             let selectedFilms;
             if (selectedFilms !== 'ALL Movies') {
                 selectedFilms = filterFilmsByCat(selectedCet)
-            } else if (btns.className.includes('allMovie')) {
-                selectedFilms = fil // ishlamayapti
+            } else {
+                selectedFilms = movies 
             }
-            filmsEl.innerHTML = ' ';
+            filmsEl.innerHTML = '';
             appendSelectedFilms(selectedFilms)
         }
     });
 }
-
+// 5-ish cat bo`yicha tanlangan movielarni chiqarish
 function appendSelectedFilms(films) {
     films.forEach((el) => {
         let movieDiv = createMovieDiv(el);
         filmsEl.appendChild(movieDiv);
     });
 }
-
+// 6-ish search qilish title va genre bo`yicha 
 function searchMovie(searchtext) {
     let resultArr = movies.filter((el) => {
         return el.title.includes(searchtext) || el.genres.includes(searchtext)
     });
     return resultArr;
 }
-
+//7 -ish search wilingan movilaeni chiqarish
 const searchFormEl = document.getElementsByClassName('search__form')[0];
 const searchInputEL = document.getElementsByClassName('search__input')[0];
 
 searchInputEL.addEventListener('keyup', function (event) {
     let searchedFilms = searchMovie(searchInputEL.value)
-
     filmsEl.innerHTML = ' ';
     appendSelectedFilms(searchedFilms)
 });
+// 8-ish watch listga qo`shish
 let myCart = cartItemsFromLocalStorage();
 
 function addMovieToCart(id) {
+    if(!myCart.includes(id))
     myCart.push(id);
-    // console.log(myCart);
 }
 if (filmsEl) {
     filmsEl.addEventListener('click', function (event) {
         if (event.target.className == 'movie__btn') {
-            let idOfCurrentFilm = event.target.getAttribute('data-id');
+            let idOfCurrentFilm = +event.target.getAttribute('data-id');
             addMovieToCart(idOfCurrentFilm);
             showCartCount();
             cartItemsToLocalStorage();
@@ -904,7 +906,7 @@ if (filmsEl) {
 
     })
 }
-
+// 9-ish 8-ish bajarilganda soni watchlistga qo`shilishi va local ga sax bolishi
 const countSpan = document.querySelector('.cart-count');
 
 function showCartCount() {
@@ -912,7 +914,7 @@ function showCartCount() {
     countSpan.innerText = myCardArr.length;
 }
 
-// showCartCount()
+showCartCount()
 
 function cartItemsToLocalStorage() {
     localStorage.setItem('myCard', JSON.stringify(myCart));
@@ -924,7 +926,7 @@ function cartItemsFromLocalStorage() {
     return result ? result : [];
 }
 // console.log(cartItemsFromLocalStorage())
-
+// 10 ish watchlistda movie yaratish
 function createCartItemDiv(el) {
     let divEl = document.createElement('div')
     divEl.className = ('movie')
@@ -970,6 +972,3 @@ if (cartEl) {
         }
     })
 }
-// function removeFromCart(divEl){
-//     console.log(divEL)
-// }
